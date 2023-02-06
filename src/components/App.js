@@ -3,10 +3,12 @@ import HomePage from "./HomePage";
 import AboutUs from "./AboutUs";
 import Header from "./common/Header";
 import CoursesPage from "./CoursesPage";
-// import CoursesPageFnC from "./CoursesPageFnC";
+import CoursesPageFnC from "./CoursesPageFnC";
 import { Route, Switch } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
 import ManageCoursePage from "./ManageCoursePage";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   // function getPage() {
@@ -18,6 +20,7 @@ function App() {
   return (
     <>
       <div className="container-fluid">
+        <ToastContainer autoClose="3000" hideProgressBar />
         <Header />
         {/* {getPage()} */}
         {/** routing using react router dom
@@ -25,9 +28,10 @@ function App() {
          */}
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/courses" component={CoursesPage} />
+          <Route path="/courses" component={CoursesPageFnC} />
           <Route path="/about" component={AboutUs} />
           <Route path="/course/:slug" component={ManageCoursePage} />
+          <Route path="/course" component={ManageCoursePage} />
           <Route component={PageNotFound} />
         </Switch>
       </div>
