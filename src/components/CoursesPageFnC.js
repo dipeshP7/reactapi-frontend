@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import CourseList from "./CourseList";
 import { Link } from "react-router-dom";
 import courseStore from "../stores/courseStore";
-import { loadCourses } from "../actions/courseAction";
+import { loadCourses, deleteCourse } from "../actions/courseAction";
 
 function CoursesPageFnC() {
   // const [courses, setCourses] = useState([]);
@@ -39,7 +39,7 @@ function CoursesPageFnC() {
         Add Course
       </Link>
       <div className="pt-2"></div>
-      <CourseList courses={courses} />
+      <CourseList courses={courses} deleteCourse={deleteCourse} />
     </>
   );
 }

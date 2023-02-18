@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function CourseList(props) {
   return (
@@ -11,6 +12,7 @@ function CourseList(props) {
             <th>Title</th>
             <th>Author Id</th>
             <th>Category</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -22,6 +24,18 @@ function CourseList(props) {
                 </td>
                 <td>{courses.authorId}</td>
                 <td>{courses.category}</td>
+                <td>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={() => {
+                      props.deleteCourse(courses.id).then(() => {
+                        toast.success("Course Deleted.");
+                      });
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
             );
           })}

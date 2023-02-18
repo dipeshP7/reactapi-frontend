@@ -5,7 +5,7 @@ import courseStore from "../stores/courseStore";
 import * as courseActions from "../actions/courseAction";
 import { toast } from "react-toastify";
 
-const ManageCoursepage = (props) => {
+const ManageCoursepageFnC = (props) => {
   const [errors, setErrors] = useState({});
   const [course, setCourse] = useState({
     id: null,
@@ -144,4 +144,4 @@ const ManageCoursepage = (props) => {
   );
 };
 
-export default ManageCoursepage;
+export default ManageCoursepageFnC;
