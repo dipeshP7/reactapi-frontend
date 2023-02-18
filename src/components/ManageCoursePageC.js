@@ -65,6 +65,10 @@ class ManageCoursePageC extends React.Component {
 
     this.setState({ errors: _errors });
 
+    /**
+     * below is the way to set all properties of error
+     * using spread operator
+     */
     //this.setState({ errors: { ...this.state.errors, ..._errors } });
     /**
      * if form is valid and error has no properties
