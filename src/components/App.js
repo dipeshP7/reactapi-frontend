@@ -2,11 +2,14 @@ import React from "react";
 import HomePage from "./HomePage";
 import AboutUs from "./AboutUs";
 import Header from "./common/Header";
-import CoursesPage from "./CoursesPage";
-// import CoursesPageFnC from "./CoursesPageFnC";
+import CoursesPageC from "./CoursesPageC";
+import CoursesPageFnC from "./CoursesPageFnC";
 import { Route, Switch } from "react-router-dom";
 import PageNotFound from "./PageNotFound";
-import ManageCoursePage from "./ManageCoursePage";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
+import ManageCoursepageFnC from "./ManageCoursePageFnC";
+import ManageCoursePageC from "./ManageCoursePageC";
 
 function App() {
   // function getPage() {
@@ -18,6 +21,7 @@ function App() {
   return (
     <>
       <div className="container-fluid">
+        <ToastContainer autoClose="3000" hideProgressBar />
         <Header />
         {/* {getPage()} */}
         {/** routing using react router dom
@@ -25,14 +29,17 @@ function App() {
          */}
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/courses" component={CoursesPage} />
+          <Route path="/courses" component={CoursesPageC} />
+          {/* <Route path="/courses" component={CoursesPageFnC} /> */}
           <Route path="/about" component={AboutUs} />
-          <Route path="/course/:slug" component={ManageCoursePage} />
+          {/* <Route path="/course/:slug" component={ManageCoursepageFnC} /> */}
+          <Route path="/course/:slug" component={ManageCoursePageC} />
+          {/* <Route path="/course" component={ManageCoursepageFnC} /> */}
+          <Route path="/course" component={ManageCoursePageC} />
           <Route component={PageNotFound} />
         </Switch>
       </div>
     </>
   );
 }
-
 export default App;
