@@ -10,7 +10,8 @@ import { deleteCourse } from "../api/courseApi";
 
 class CoursesPageC extends React.Component {
   state = {
-    courses: [],
+    courses: courseStore.getCourses(),
+    // courses: []
     //courses: courseStore.getCourses(),
   };
 
@@ -48,18 +49,18 @@ class CoursesPageC extends React.Component {
      * time to get courses details
      * without flux
      */
-    getCourses().then((courseList) => {
-      this.setState({ courses: courseList });
-    });
+    // getCourses().then((courseList) => {
+    //   this.setState({ courses: courseList });
+    // });
 
     /**
      * this code will fetch courses from
      * flux store
      * With Flux
      */
-    // courseStore.addChangeListener(this.onChange);
-    // if (courseStore.getCourses().length === 0) loadCourses();
-    // return () => courseStore.removeAllListeners(this.onChange);
+    courseStore.addChangeListener(this.onChange);
+    if (courseStore.getCourses().length === 0) loadCourses();
+    return () => courseStore.removeAllListeners(this.onChange);
   }
 
   render() {
