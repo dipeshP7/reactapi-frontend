@@ -1,6 +1,8 @@
 import React from "react";
 import CourseFormC from "./CourseFormC";
 import * as CourseApi from "../api/courseApi";
+import courseStore from "../stores/courseStore";
+import * as courseActions from "../actions/courseAction";
 import { toast } from "react-toastify";
 
 class ManageCoursePageC extends React.Component {
@@ -19,20 +21,44 @@ class ManageCoursePageC extends React.Component {
         // authorId: "",
         // category: "",
       },
+      courses: courseStore.getCourses(),
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.isFormValid = this.isFormValid.bind(this);
+    this.onActionChange = this.onActionChange.bind(this);
+  }
+
+  onActionChange() {
+    this.setState({ courses: courseStore.getCourses() });
   }
 
   componentDidMount() {
+    /**
+     * this code is without flux
+     * fething slug course data
+     * on loading the page
+     */
+    // const slug = this.props.match.params.slug;
+    // if (slug) {
+    //   CourseApi.getCourseBySlug(slug).then((_course) =>
+    //     this.setState({ course: _course })
+    //   );
+    // }
+    // console.log(slug);
+    /**
+     * this code with flux
+     * fetching course data
+     * from course store
+     */
     const slug = this.props.match.params.slug;
-    if (slug) {
-      CourseApi.getCourseBySlug(slug).then((_course) =>
-        this.setState({ course: _course })
-      );
+    courseStore.addChangeListener(this.onActionChange);
+    if (this.state.courses.length === 0) {
+      courseActions.loadCourses();
+    } else if (slug) {
+      this.setState({ course: courseStore.getCoursBySlug(slug) });
+      return () => courseStore.removeAllListeners(this.onActionChange);
     }
-    console.log(slug);
   }
 
   handleChange(event) {
@@ -50,10 +76,20 @@ class ManageCoursePageC extends React.Component {
      * Saving course without using flux
      * here we calling save api
      */
-    CourseApi.saveCourse(this.state.course).then(() => {
+    // CourseApi.saveCourse(this.state.course).then(() => {
+    //   this.props.history.push("/courses");
+    //   toast.success("Course Saved.");
+    // });
+    /**
+     * here saving course with
+     * using flux
+     */
+    courseStore.addChangeListener(this.onActionChange);
+    courseActions.saveCourse(this.state.course).then(() => {
       this.props.history.push("/courses");
       toast.success("Course Saved.");
     });
+    return () => courseStore.removeAllListeners(this.onActionChange);
   }
 
   isFormValid() {

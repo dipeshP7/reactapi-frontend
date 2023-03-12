@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { getCourses } from "../api/courseApi";
 import CourseList from "./CourseList";
 import courseStore from "../stores/courseStore";
-import { loadCourses } from "../actions/courseAction";
+import * as courseAction from "../actions/courseAction";
 import CourseListC from "./CourseListC";
 import { toast } from "react-toastify";
 import { deleteCourse } from "../api/courseApi";
@@ -34,11 +34,16 @@ class CoursesPageC extends React.Component {
      * code to delete course from api
      * without using flux
      */
-
-    deleteCourse(courseId).then(() => {
-      getCourses().then((courselist) => {
-        this.setState({ courses: courselist });
-      });
+    // deleteCourse(courseId).then(() => {
+    //   getCourses().then((courselist) => {
+    //     this.setState({ courses: courselist });
+    //   });
+    //   toast.success("Course Deleted. ");
+    // });
+    /**
+     * this code with using flux
+     */
+    courseAction.deleteCourse(courseId).then(() => {
       toast.success("Course Deleted. ");
     });
   }
@@ -59,7 +64,7 @@ class CoursesPageC extends React.Component {
      * With Flux
      */
     courseStore.addChangeListener(this.onChange);
-    if (courseStore.getCourses().length === 0) loadCourses();
+    if (courseStore.getCourses().length === 0) courseAction.loadCourses();
     return () => courseStore.removeAllListeners(this.onChange);
   }
 
